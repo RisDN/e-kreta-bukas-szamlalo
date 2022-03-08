@@ -1,0 +1,22 @@
+{
+    "name": "Megubkás számító - eKreta",
+    "description": "Tantárgyaid mellett jelzi, hogy hány darab egyes kellene ahhoz, hogy bukásra állj.",
+    "author": "Ris#2928",
+    "version": "1.0.0",
+    "manifest_version": 3,
+
+    "permissions": [
+        "activeTab",
+        "storage",
+        "tabs",
+        "scripting"
+    ],
+
+    "host_permissions": [
+        "<all_urls>"
+    ],
+
+    "background": {
+        "service_worker": "background.js"
+    }
+}
