@@ -19,7 +19,6 @@ function osszegzes(lista) {
 
 const init = () => {
     insertOszlop()
-
     const tantargySorok = getTantargyak()
     const jegyekLista = []
     for (let i = 1; i < tantargySorok.length; i++) {
@@ -79,24 +78,41 @@ function mennyiKellMegjelenites(adat) {
     console.log(tantargySorok)
     tantargySorok[0].innerHTML += '<td class="atlag kozepre" role="gridcell">-</td>'
     for (let i = 0; i < adat.length; i++) {
+        let mennyi = mennyiEgyesKell(adat[i].jegyek)
         tantargySorok[i + 1].innerHTML +=
-            `<td class="atlag kozepre" role="gridcell">${mennyiEgyesKell(adat[i].jegyek)} db</td>`
+            `<td class="atlag kozepre" role="gridcell"><span style="color: ${szinezo(mennyi)};">${mennyi} db</span></td>`
         console.log(adat[i].jegyek, adat[i].tantargy)
     }
 }
 
+function szinezo(mennyiEgyes) {
+    if (mennyiEgyes <= 1) {
+        return "#8a131f"
+    } else if (mennyiEgyes <= 3) {
+        return "#dc3545"
+    } else if (mennyiEgyes <= 4) {
+        return "#fd7e14"
+    } else if (mennyiEgyes <= 6) {
+        return "#ffc107"
+    } else if (mennyiEgyes <= 8) {
+        return "#20c997"
+    } else if (mennyiEgyes <= 10) {
+        return "#198754"
+    } else if (mennyiEgyes > 10) {
+        return "#198754"
+    }
+}
 
 
 const linkValidate = 'e-kreta.hu/TanuloErtekeles/Osztalyzatok'
-let observer = new MutationObserver(mutationRecords => {
-    if (window.location.href.includes(linkValidate)) {
+if (window.location.href.includes(linkValidate)) {
+    let observer = new MutationObserver(mutationRecords => {
         init()
-    }
-    observer.disconnect()
-});
-
-observer.observe(document.querySelector('.TanuloErtekelesGrid tbody'), {
-    childList: true,
-    subtree: true,
-    characterDataOldValue: true
-});
+        observer.disconnect()
+    });
+    observer.observe(document.querySelector('.TanuloErtekelesGrid tbody'), {
+        childList: true,
+        subtree: true,
+        characterDataOldValue: true
+    });
+}
